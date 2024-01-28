@@ -11,14 +11,17 @@ function Signup() {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:5001/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
+    const res = await fetch(
+      "https://rablo-in-assignment-26751m865-vedant-bhosles-projects.vercel.app/register",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      }
+    );
 
     const data = await res.json();
     if (!data) console.log("signup not successful");
