@@ -10,19 +10,16 @@ function Signin() {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch(
-      "https://rablo-in-assignment-26751m865-vedant-bhosles-projects.vercel.app/login",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+    const res = await fetch("http://localhost:5001/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
 
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-        credentials: "include",
-      }
-    );
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+      credentials: "include",
+    });
 
     const data = await res.json();
 
