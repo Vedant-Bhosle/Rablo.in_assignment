@@ -25,7 +25,7 @@ app.use(
 );
 // app.options("*", cors());
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   // another common pattern
   // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
