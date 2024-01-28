@@ -22,6 +22,7 @@ function Signup() {
     });
 
     const data = await res.json();
+    console.log(data);
     if (!data) console.log("signup not successful");
     navigate("/signin");
     console.log(data);
