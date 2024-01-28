@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UpdateModal from "./UpdateModal";
+import { useNavigate } from "react-router-dom";
 function Product() {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [productId, setproductId] = useState("");
   const [name, setName] = useState("");
@@ -35,12 +37,20 @@ function Product() {
     });
 
     // setProducts(res)
+
     const data = await res.json();
-    setProducts(data);
+    if (res.status == 401) {
+      navigate("/signin");
+    } else {
+      setProducts(data);
+    }
   };
   useEffect(() => {
     getproducts();
-  }, [products]);
+  }, []);
+  const updateProduct = () => {
+    getproducts();
+  };
 
   const addProduct = async (e) => {
     e.preventDefault();
@@ -201,32 +211,38 @@ function Product() {
 
       <h1 className="text-3xl font-semibold mb-4 mt-10">Products</h1>
       <div className="grid grid-cols-3 gap-4">
-        {products.map((product) => (
-          <div key={product.productId} className="bg-white rounded p-4 shadow">
-            <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
-            <p className="text-gray-600">${product.price}</p>
-            <p className="text-gray-600">{product.company}</p>
-            <p className="text-gray-600">rating: {product.rating}</p>
-            <button
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 mt-3 px-4 rounded focus:outline-none focus:shadow-outline"
-              onClick={() => handleDelete(product.productId)}
+        {products &&
+          products.map((product) => (
+            <div
+              key={product.productId}
+              className="bg-white rounded p-4 shadow"
             >
-              Delete
-            </button>
-            <button
-              className="bg-green-500 ml-2 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              onClick={() => handleUpdateModalOpen(product)}
-            >
-              Update
-            </button>
-          </div>
-        ))}
+              <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
+              <p className="text-gray-600">${product.price}</p>
+              <p className="text-gray-600">{product.company}</p>
+              <p className="text-gray-600">rating: {product.rating}</p>
+              <button
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 mt-3 px-4 rounded focus:outline-none focus:shadow-outline"
+                onClick={() => handleDelete(product.productId)}
+              >
+                Delete
+              </button>
+              <button
+                className="bg-green-500 ml-2 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                onClick={() => handleUpdateModalOpen(product)}
+              >
+                Update
+              </button>
+            </div>
+          ))}
       </div>
       {isUpdateModalOpen && (
         <UpdateModal
           isOpen={isUpdateModalOpen}
           onClose={() => setUpdateModalOpen(false)}
-          // updateProduct={updateProduct}
+          updateProduct={updateProduct}
+          updateForm={updateForm}
+          setUpdateForm={setUpdateForm}
         />
       )}
     </div>

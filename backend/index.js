@@ -104,8 +104,8 @@ app.post("/register", async (req, res) => {
 });
 
 app.get("/authcheck", auth, (req, res) => {
-  console.log("IN Question page");
-  res.status(200).send(req.user);
+  console.log("we are authenticated page");
+  res.status(200).json(req.user);
 });
 
 //product routes
@@ -121,7 +121,7 @@ app.post("/createproduct", async (req, res) => {
   }
 });
 
-app.get("/getproducts", async (req, res) => {
+app.get("/getproducts", auth, async (req, res) => {
   try {
     const products = await Product.find();
     res.json(products);
@@ -133,11 +133,16 @@ app.get("/getproducts", async (req, res) => {
 //update product
 app.put("/products/:id", async (req, res) => {
   try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const product = await Product.updateOne(
+      { productId: req.params.id },
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
     if (!product) {
+      console.log(product);
       return res.status(404).send();
     }
     res.send(product);

@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
-const mongoURI = process.env.MOGOURI;
+// const mongoURI = process.env.MOGOURI;
+require("dotenv").config();
 
 //this is local database after test we have to add atlas
 mongoose
-  .connect("mongodb://127.0.0.1/rablo", {
+  .connect(process.env.MOGOURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

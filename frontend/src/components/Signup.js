@@ -11,7 +11,7 @@ function Signup() {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("/register", {
+    const res = await fetch("http://localhost:5001/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
