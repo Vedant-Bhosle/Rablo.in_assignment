@@ -12,7 +12,7 @@ function Signup() {
     e.preventDefault();
 
     const res = await fetch(
-      "https://rablo-in-assignment-kxrlphjdr-vedant-bhosles-projects.vercel.app/register",
+      "https://rablo-in-assignment-omjb31xc6-vedant-bhosles-projects.vercel.app/register",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
